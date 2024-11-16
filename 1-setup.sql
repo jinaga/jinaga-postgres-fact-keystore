@@ -35,7 +35,7 @@ IF (SELECT to_regclass('public.fact_type')) IS NULL THEN
 
     CREATE TABLE fact_type (
         fact_type_id serial PRIMARY KEY,
-        name character varying(100) NOT NULL
+        name character varying(200) NOT NULL
     );
 
 
@@ -57,7 +57,7 @@ IF (SELECT to_regclass('public.role')) IS NULL THEN
         CONSTRAINT fk_defining_fact_type_id
             FOREIGN KEY (defining_fact_type_id)
             REFERENCES fact_type (fact_type_id),
-        name character varying(100) NOT NULL
+        name character varying(200) NOT NULL
     );
 
 
@@ -106,11 +106,13 @@ IF (SELECT to_regclass('public.edge') IS NULL) THEN
         successor_fact_id integer NOT NULL,
         CONSTRAINT fk_successor_fact_id
             FOREIGN KEY (successor_fact_id)
-            REFERENCES fact (fact_id),
+            REFERENCES fact (fact_id)
+            ON DELETE CASCADE,
         predecessor_fact_id integer NOT NULL,
         CONSTRAINT fk_predecessor_fact_id
             FOREIGN KEY (predecessor_fact_id)
             REFERENCES fact (fact_id)
+            ON DELETE CASCADE
     );
 
 
@@ -135,11 +137,13 @@ IF (SELECT to_regclass('public.ancestor') IS NULL) THEN
         fact_id integer NOT NULL,
         CONSTRAINT fk_fact_id
             FOREIGN KEY (fact_id)
-            REFERENCES fact (fact_id),
+            REFERENCES fact (fact_id)
+            ON DELETE CASCADE,
         ancestor_fact_id integer NOT NULL,
         CONSTRAINT fk_ancestor_fact_id
             FOREIGN KEY (ancestor_fact_id)
             REFERENCES fact (fact_id)
+            ON DELETE CASCADE
     );
 
 
@@ -177,7 +181,8 @@ IF (SELECT to_regclass('public.signature') IS NULL) THEN
         fact_id integer NOT NULL,
         CONSTRAINT fk_fact_id
             FOREIGN KEY (fact_id)
-            REFERENCES fact (fact_id),
+            REFERENCES fact (fact_id)
+            ON DELETE CASCADE,
         public_key_id integer NOT NULL,
         CONSTRAINT fk_public_key_id
             FOREIGN KEY (public_key_id)

@@ -40,4 +40,14 @@ cd jinaga-postgres-fact-keystore
 docker build -t jinaga/jinaga-postgres-fact-keystore .
 ```
 
+To build a new version of the Docker image, follow these steps:
+
+1. Update the version in your code and commit the changes.
+2. Tag the commit with the new version. For example:
+    ```bash
+    git tag v1.0.1
+    git push origin v1.0.1
+    ```
+3. Push the changes to the main branch. The GitHub Actions workflow will automatically build and publish the new version of the Docker image.
+
 This image is based on the official [postgres](https://hub.docker.com/_/postgres) image.
